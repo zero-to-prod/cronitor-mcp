@@ -1,0 +1,66 @@
+name: build_docker_image
+
+on:
+  workflow_run:
+    workflows: [ "release" ]
+    types:
+      - completed
+
+jobs:
+  build_docker_image:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+        with:
+          platforms: all
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+        with:
+          driver-opts: |
+            image=moby/buildkit:latest
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v3
+        with:
+          username: :docker_registry_username
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+      - name: Get version
+        id: get_version
+        run: echo "VERSION=${GITHUB_SHA::7}" >> $GITHUB_ENV
+
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          target: production
+          platforms: linux/amd64,linux/arm64
+          push: true
+          cache-from: type=registry,ref=:docker_registry_username/:docker_image_name:buildcache
+          cache-to: type=registry,ref=:docker_registry_username/:docker_image_name:buildcache,mode=max
+          tags: |
+            :docker_registry_username/:docker_image_name:latest
+            :docker_registry_username/:docker_image_name:${{ env.VERSION }}
+          build-args: |
+            QEMU_CPU=max
+          labels: |
+            org.opencontainers.image.source=${{ github.event.repository.html_url }}
+            org.opencontainers.image.revision=${{ github.sha }}
+            org.opencontainers.image.created=${{ github.event.repository.updated_at }}
+
+      - name: Scan for vulnerabilities
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: ':docker_registry_username/:docker_image_name:${{ env.VERSION }}'
+          format: 'table'
+          exit-code: '1'
+          ignore-unfixed: true
+          vuln-type: 'os,library'
+          severity: 'CRITICAL,HIGH'

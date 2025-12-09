@@ -1,0 +1,30 @@
+services:
+  app:
+    build: .
+    ports:
+      - "8080:80"
+    volumes:
+      - mcp-sessions:/app/storage/mcp-sessions
+    restart: unless-stopped
+
+  debug:
+    build:
+      target: build
+    ports:
+      - "8082:80"
+    volumes:
+      - .:/app
+    command: frankenphp php-server
+    profiles:
+      - debug
+
+  composer:
+    build:
+      target: build
+    volumes:
+      - .:/app
+    profiles:
+      - composer
+
+volumes:
+  mcp-sessions:
