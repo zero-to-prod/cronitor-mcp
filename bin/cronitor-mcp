@@ -34,10 +34,10 @@ match ($command) {
 function printHelp(): void
 {
     echo <<<HELP
-:server_name CLI
+Cronitor MCP Server CLI
 
 Usage:
-  :package_slug [command]
+  cronitor-mcp [command]
 
 Available Commands:
   help      Show this help message
@@ -45,7 +45,7 @@ Available Commands:
   list      List all available commands
 
 For more information, see the documentation at:
-https://github.com/:github_org/:github_repo
+https://github.com/zero-to-prod/cronitor-mcp
 
 HELP;
     exit(0);
@@ -53,7 +53,7 @@ HELP;
 
 function printVersion(): void
 {
-    echo ':server_name v:server_version' . PHP_EOL;
+    echo 'Cronitor MCP Server v1.0.0' . PHP_EOL;
     exit(0);
 }
 
@@ -69,6 +69,6 @@ function listCommands(): void
 function unknownCommand(string $command): void
 {
     fwrite(STDERR, "Unknown command: {$command}" . PHP_EOL);
-    fwrite(STDERR, "Run ':package_slug help' for usage information." . PHP_EOL);
+    fwrite(STDERR, "Run 'cronitor-mcp help' for usage information." . PHP_EOL);
     exit(1);
 }
