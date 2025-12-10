@@ -6,12 +6,13 @@
 [![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/zero-to-prod/cronitor-mcp/test.yml?label=test)](https://github.com/zero-to-prod/cronitor-mcp/actions)
 [![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/zero-to-prod/cronitor-mcp/backwards_compatibility.yml?label=backwards_compatibility)](https://github.com/zero-to-prod/cronitor-mcp/actions)
 [![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/zero-to-prod/cronitor-mcp/build_docker_image.yml?label=build_docker_image)](https://github.com/zero-to-prod/cronitor-mcp/actions)
-[![License](https://img.shields.io/packagist/l/zero-to-prod/cronitor-mcp?color=pink)](https://github.com/zero-to-prod/cronitor-mcp/blob/main/LICENSE.md)
+[![GitHub License](https://img.shields.io/badge/license-MIT-blue?style=flat-square)](https://github.com/zero-to-prod/cronitor-mcp/blob/main/LICENSE.md)
 [![Hits-of-Code](https://hitsofcode.com/github/zero-to-prod/cronitor-mcp?branch=main)](https://hitsofcode.com/github/zero-to-prod/cronitor-mcp/view?branch=main)
 
 ## Contents
 
 - [Introduction](#introduction)
+- [Quick Start](#quick-start)
 - [Requirements](#requirements)
 - [Installation](#installation)
 - [Usage](#usage)
@@ -23,6 +24,35 @@
 ## Introduction
 
 MCP Server for Cronitor monitoring and observability
+
+## Quick Start
+
+Run the Docker image:
+
+```shell
+docker run -d -p 8090:80 \
+  -e CRONITOR_API_KEY=your_cronitor_api_key_here \
+  davidsmith3/cronitor-mcp:latest
+```
+
+Add the server to Claude:
+
+```shell
+claude mcp add --transport http cronitor http://localhost:8090/mcp
+```
+
+Optionally, add the server directly:
+
+```json
+{
+    "mcpServers": {
+        "cronitor": {
+            "type": "streamable-http",
+            "url": "http://localhost:8090/mcp"
+        }
+    }
+}
+```
 
 ## Requirements
 
