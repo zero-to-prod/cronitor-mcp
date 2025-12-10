@@ -5,18 +5,25 @@ services:
       - "8080:80"
     volumes:
       - mcp-sessions:/app/storage/mcp-sessions
+    environment:
+      - CRONITOR_API_KEY=${CRONITOR_API_KEY}
     restart: unless-stopped
 
-  debug:
+  dev:
     build:
+      context: .
       target: build
     ports:
       - "8082:80"
     volumes:
       - .:/app
-    command: frankenphp php-server
+      - ./Caddyfile:/etc/frankenphp/Caddyfile:ro
+    environment:
+      - CRONITOR_API_KEY=${CRONITOR_API_KEY}
+      - MCP_DEBUG=${MCP_DEBUG:-false}
+    command: frankenphp run --config /etc/frankenphp/Caddyfile
     profiles:
-      - debug
+      - dev
 
   composer:
     build:

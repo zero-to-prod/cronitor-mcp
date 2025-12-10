@@ -9,6 +9,7 @@
 docker run -d \
   --name cronitor-mcp \
   -p 8080:80 \
+  -e CRONITOR_API_KEY=your_cronitor_api_key_here \
   davidsmith3/cronitor-mcp:latest
 
 # Access the MCP server
@@ -25,6 +26,7 @@ docker build --target production -t cronitor-mcp:local .
 docker run -d \
   --name cronitor-mcp \
   -p 8080:80 \
+  -e CRONITOR_API_KEY=your_cronitor_api_key_here \
   cronitor-mcp:local
 ```
 
@@ -34,6 +36,7 @@ docker run -d \
 
 | Variable | Default | Description |
 |----------|---------|-------------|
+| `CRONITOR_API_KEY` | - | Cronitor API key for authentication (required) |
 | `MCP_DEBUG` | `false` | Enable debug logging |
 | `PHP_MEMORY_LIMIT` | `256M` | PHP memory limit |
 
@@ -43,6 +46,7 @@ docker run -d \
 docker run -d \
   --name cronitor-mcp \
   -p 8080:80 \
+  -e CRONITOR_API_KEY=your_cronitor_api_key_here \
   -e MCP_DEBUG=true \
   -e PHP_MEMORY_LIMIT=512M \
   davidsmith3/cronitor-mcp:latest
@@ -56,6 +60,7 @@ MCP sessions are stored in `/var/www/html/storage/mcp-sessions`. To persist sess
 docker run -d \
   --name cronitor-mcp \
   -p 8080:80 \
+  -e CRONITOR_API_KEY=your_cronitor_api_key_here \
   -v cronitor-sessions:/var/www/html/storage/mcp-sessions \
   davidsmith3/cronitor-mcp:latest
 ```
@@ -168,6 +173,7 @@ services:
     ports:
       - "8080:80"
     environment:
+      - CRONITOR_API_KEY=${CRONITOR_API_KEY}
       - MCP_DEBUG=false
     volumes:
       - mcp-sessions:/var/www/html/storage/mcp-sessions
@@ -199,6 +205,7 @@ docker run -d \
   --platform linux/amd64 \
   --name cronitor-mcp \
   -p 8080:80 \
+  -e CRONITOR_API_KEY=your_cronitor_api_key_here \
   davidsmith3/cronitor-mcp:latest
 
 # For ARM64 (e.g., Apple Silicon, Raspberry Pi)
@@ -206,6 +213,7 @@ docker run -d \
   --platform linux/arm64 \
   --name cronitor-mcp \
   -p 8080:80 \
+  -e CRONITOR_API_KEY=your_cronitor_api_key_here \
   davidsmith3/cronitor-mcp:latest
 ```
 
@@ -262,6 +270,7 @@ services:
       restart_policy:
         condition: on-failure
     environment:
+      - CRONITOR_API_KEY=${CRONITOR_API_KEY}
       - MCP_DEBUG=false
     volumes:
       - mcp-sessions:/var/www/html/storage/mcp-sessions
@@ -297,6 +306,8 @@ spec:
         ports:
         - containerPort: 80
         env:
+        - name: CRONITOR_API_KEY
+          value: "your_cronitor_api_key_here"
         - name: MCP_DEBUG
           value: "false"
         volumeMounts:
@@ -368,6 +379,7 @@ docker run -d \
   --name cronitor-mcp \
   --no-healthcheck \
   -p 8080:80 \
+  -e CRONITOR_API_KEY=your_cronitor_api_key_here \
   davidsmith3/cronitor-mcp:latest
 ```
 
