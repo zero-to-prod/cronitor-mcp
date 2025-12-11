@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\IssuesRequest;
 use Mcp\Capability\Attribute\McpTool;
 use Mcp\Capability\Attribute\Schema;
 use Mcp\Schema\ToolAnnotations;
@@ -16,7 +15,7 @@ use RuntimeException;
  * This controller provides MCP tools for interacting with the Cronitor Issues API.
  * See: https://cronitor.io/docs/issues-api
  */
-class CronitorIssuesController
+class IssuesController
 {
 
     #[McpTool(
@@ -271,31 +270,29 @@ class CronitorIssuesController
         )]
         ?bool $withComponentDetails = null
     ): array {
-        $query_params = array_filter(
-            IssuesRequest::from([
-                IssuesRequest::state => $state,
-                IssuesRequest::severity => $severity,
-                IssuesRequest::statuspage => $statuspage,
-                IssuesRequest::group => $group,
-                IssuesRequest::job => $job,
-                IssuesRequest::component => $component,
-                IssuesRequest::check => $check,
-                IssuesRequest::heartbeat => $heartbeat,
-                IssuesRequest::site => $site,
-                IssuesRequest::tag => $tag,
-                IssuesRequest::type => $type,
-                IssuesRequest::env => $env,
-                IssuesRequest::search => $search,
-                IssuesRequest::time => $time,
-                IssuesRequest::orderBy => $orderBy,
-                IssuesRequest::page => $page,
-                IssuesRequest::pageSize => $pageSize,
-                IssuesRequest::withStatusPageDetails => $withStatusPageDetails,
-                IssuesRequest::withMonitorDetails => $withMonitorDetails,
-                IssuesRequest::withAlertDetails => $withAlertDetails,
-                IssuesRequest::withComponentDetails => $withComponentDetails,
-            ])->toArray()
-        );
+        $query_params = array_filter([
+            'state' => $state,
+            'severity' => $severity,
+            'statuspage' => $statuspage,
+            'group' => $group,
+            'job' => $job,
+            'component' => $component,
+            'check' => $check,
+            'heartbeat' => $heartbeat,
+            'site' => $site,
+            'tag' => $tag,
+            'type' => $type,
+            'env' => $env,
+            'search' => $search,
+            'time' => $time,
+            'orderBy' => $orderBy,
+            'page' => $page,
+            'pageSize' => $pageSize,
+            'withStatusPageDetails' => $withStatusPageDetails ? 'true' : null,
+            'withMonitorDetails' => $withMonitorDetails ? 'true' : null,
+            'withAlertDetails' => $withAlertDetails ? 'true' : null,
+            'withComponentDetails' => $withComponentDetails ? 'true' : null,
+        ], fn($v) => $v !== null);
 
         $url = 'https://cronitor.io/api/issues';
         if (!empty($query_params)) {

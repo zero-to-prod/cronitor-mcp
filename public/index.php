@@ -1,4 +1,4 @@
 <?php
 
-require_once __DIR__.'/../vendor/autoload.php';
-require_once __DIR__.'/../bootstrap/app.php';
+// Simply run the server in HTTP mode
+require __DIR__ . '/../server.php';
