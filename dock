@@ -16,7 +16,7 @@ Examples:
   $0 init
   $0 test --filter=MyTest
   $0 composer install
-  $0 app bash
+  $0 prod bash
 EOF
   exit 1
 }
@@ -57,7 +57,7 @@ case "$1" in
   ;;
   build)
     shift
-    docker compose build "app" "$@"
+    docker compose build "prod" "$@"
     docker compose build "dev" "$@"
     docker compose build "composer" "$@"
   ;;
