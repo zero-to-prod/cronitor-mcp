@@ -3,7 +3,7 @@ services:
     build:
       context: .
       args:
-        VERSION: ${MCP_VERSION:-0.0.0}
+        VERSION: ${APP_VERSION:-0.0.0}
     ports:
       - "8081:80"
     volumes:
@@ -24,8 +24,9 @@ services:
       - .:/app
       - ./Caddyfile:/etc/frankenphp/Caddyfile:ro
     environment:
+      - APP_DEBUG=${APP_DEBUG:-false}
+      - APP_VERSION=${APP_VERSION:-0.0.0-dev}
       - CRONITOR_API_KEY=${CRONITOR_API_KEY}
-      - MCP_VERSION=${MCP_VERSION:-0.0.0-dev}
     command: frankenphp run --config /etc/frankenphp/Caddyfile
 
   composer:

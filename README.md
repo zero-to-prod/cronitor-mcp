@@ -17,8 +17,6 @@
 - [Installation](#installation)
 - [Usage](#usage)
 - [Docker Image](#docker)
-- [Local Development](./LOCAL_DEVELOPMENT.md)
-- [Image Development](./IMAGE_DEVELOPMENT.md)
 - [Contributing](#contributing)
 
 ## Introduction
@@ -83,14 +81,14 @@ docker run -d -p 8080:80 \
 ### Environment Variables
 
 - `CRONITOR_API_KEY` - Your Cronitor API key for authentication (get it from [Cronitor API Settings](https://cronitor.io/settings/api))
-- `MCP_DEBUG=false` - Enable debug mode
+- `APP_DEBUG=false` - Enable debug mode
 
 Example:
 
 ```shell
 docker run -d -p 8080:80 \
   -e CRONITOR_API_KEY=your_cronitor_api_key_here \
-  -e MCP_DEBUG=true \
+  -e APP_DEBUG=true \
   davidsmith3/cronitor-mcp:latest
 ```
 
