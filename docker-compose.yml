@@ -25,7 +25,6 @@ services:
       - ./Caddyfile:/etc/frankenphp/Caddyfile:ro
     environment:
       - CRONITOR_API_KEY=${CRONITOR_API_KEY}
-      - MCP_DEBUG=${MCP_DEBUG:-false}
       - MCP_VERSION=${MCP_VERSION:-0.0.0-dev}
     command: frankenphp run --config /etc/frankenphp/Caddyfile
 

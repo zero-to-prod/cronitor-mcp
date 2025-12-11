@@ -12,10 +12,14 @@ use Nyholm\Psr7\Factory\Psr17Factory;
 use Nyholm\Psr7Server\ServerRequestCreator;
 use Psr\Log\AbstractLogger;
 
-$logger = new class extends AbstractLogger {
+$logger = new class() extends AbstractLogger {
+    public function __construct()
+    {
+    }
+
     public function log($level, string|\Stringable $message, array $context = []): void
     {
-        if (($_ENV['MCP_DEBUG'] ?? 'false') === 'true') {
+        if (in_array($level, ['error', 'warning', 'critical', 'alert', 'emergency'])) {
             $timestamp = date('Y-m-d H:i:s');
             $contextStr = !empty($context) ? ' '.json_encode($context) : '';
             error_log("[{$timestamp}] [{$level}] {$message}{$contextStr}");
