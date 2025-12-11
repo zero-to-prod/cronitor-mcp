@@ -33,7 +33,7 @@ $psr17Factory = new Psr17Factory();
 new SapiEmitter()
     ->emit(
         Server::builder()
-            ->setServerInfo('Cronitor MCP Server', $_ENV['MCP_VERSION'] ?? '1.0.0')
+            ->setServerInfo('Cronitor MCP Server', $_ENV['MCP_VERSION'] ?? '0.1.6')
             ->setDiscovery(__DIR__, ['app/Http/Controllers'])
             ->setSession(new FileSessionStore($sessions_dir))
             ->setLogger($logger)
