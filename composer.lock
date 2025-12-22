@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "254de4492f7a7e9d24a724ec1587e051",
+    "content-hash": "c24babb1408eadc88b109e1ad9cf7461",
     "packages": [
         {
             "name": "doctrine/deprecations",
@@ -56,16 +56,16 @@
         },
         {
             "name": "mcp/sdk",
-            "version": "v0.1.0",
+            "version": "v0.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/modelcontextprotocol/php-sdk.git",
-                "reference": "470237ad0b42ac3a4408e5a34a4d7a53a3bccd4e"
+                "reference": "3b31954ac6909510e8f93e654323ecaaa85bc8f3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/modelcontextprotocol/php-sdk/zipball/470237ad0b42ac3a4408e5a34a4d7a53a3bccd4e",
-                "reference": "470237ad0b42ac3a4408e5a34a4d7a53a3bccd4e",
+                "url": "https://api.github.com/repos/modelcontextprotocol/php-sdk/zipball/3b31954ac6909510e8f93e654323ecaaa85bc8f3",
+                "reference": "3b31954ac6909510e8f93e654323ecaaa85bc8f3",
                 "shasum": ""
             },
             "require": {
@@ -87,7 +87,7 @@
                 "laminas/laminas-httphandlerrunner": "^2.12",
                 "nyholm/psr7": "^1.8",
                 "nyholm/psr7-server": "^1.1",
-                "php-cs-fixer/shim": "^3.84",
+                "php-cs-fixer/shim": "^3.91",
                 "phpstan/phpstan": "^2.1",
                 "phpunit/phpunit": "^10.5",
                 "psr/cache": "^3.0",
@@ -123,9 +123,9 @@
             "description": "Model Context Protocol SDK for Client and Server applications in PHP",
             "support": {
                 "issues": "https://github.com/modelcontextprotocol/php-sdk/issues",
-                "source": "https://github.com/modelcontextprotocol/php-sdk/tree/v0.1.0"
+                "source": "https://github.com/modelcontextprotocol/php-sdk/tree/v0.2.0"
             },
-            "time": "2025-11-20T18:48:17+00:00"
+            "time": "2025-12-20T07:50:08+00:00"
         },
         {
             "name": "nyholm/psr7",
@@ -4144,5 +4144,5 @@
         "ext-curl": "*"
     },
     "platform-dev": {},
-    "plugin-api-version": "2.9.0"
+    "plugin-api-version": "2.6.0"
 }
