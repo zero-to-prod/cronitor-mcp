@@ -3,8 +3,9 @@
 declare(strict_types=1);
 
 require __DIR__.'/../vendor/autoload.php';
-const base_dir = __DIR__.'/..';
-const mcp_sessions_dir = __DIR__.'/../storage/mcp-sessions';
+
+$base_dir = __DIR__.'/..';
+$mcp_sessions_dir = $_ENV['MCP_SESSIONS_DIR'] ?? __DIR__.'/../storage/mcp-sessions';
 
 use Mcp\Server;
 use Mcp\Server\Session\FileSessionStore;
@@ -36,16 +37,20 @@ $logger = new class() extends AbstractLogger {
     }
 };
 
-if (!is_dir(mcp_sessions_dir) && !mkdir(mcp_sessions_dir, 0755, true) && !is_dir(mcp_sessions_dir)) {
-    throw new RuntimeException(sprintf('Directory "%s" was not created', mcp_sessions_dir));
+if (!is_dir($mcp_sessions_dir) && !mkdir($mcp_sessions_dir, 0755, true) && !is_dir($mcp_sessions_dir)) {
+    throw new RuntimeException(sprintf('Directory "%s" was not created', $mcp_sessions_dir));
 }
 
 $psr17Factory = new Psr17Factory();
 
+$controller_paths = !empty($_ENV['MCP_CONTROLLER_PATHS'])
+    ? explode(':', $_ENV['MCP_CONTROLLER_PATHS'])
+    : ['app/Http/Controllers'];
+
 $response = Server::builder()
-    ->setServerInfo('Cronitor MCP Server', $_ENV['APP_VERSION'] ?? '0.0.0')
-    ->setDiscovery(base_dir, ['app/Http/Controllers'])
-    ->setSession(new FileSessionStore(mcp_sessions_dir))
+    ->setServerInfo($_ENV['MCP_SERVER_NAME'] ?? 'MCP Server', $_ENV['APP_VERSION'] ?? '0.0.0')
+    ->setDiscovery($base_dir, $controller_paths)
+    ->setSession(new FileSessionStore($mcp_sessions_dir))
     ->setLogger($logger)
     ->build()
     ->run(
